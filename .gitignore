@@ -1,0 +1,14 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Distribution / packaging
+dist/
+
+# Environments
+/.venv/
+
+# PyCharm
+/.idea/
+/.coverage
+/.env
+/coverage*
