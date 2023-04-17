@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic.base import TemplateView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -40,11 +40,15 @@ class HomePageView(TemplateView):  # (2)
         return context
 
     def get(self, request, *args, **kwargs):
-        tags=self.kwargs.get('tags', '---')
-        article_id=self.kwargs.get('article_id', '---')
-        if tags == '---' and article_id == '---':
-            return redirect(reverse_lazy('article', kwargs={'tags': 'python', 'article_id': 42}))
-        return HttpResponse(f'Статья номер {article_id}. Тег {tags}')
+        article = get_object_or_404(Article, id=kwargs['article_id'])
+        return render(request, 'articles/show.html', context={
+            'article': article,
+        })
+        # tags = self.kwargs.get('tags', '---')
+        # article_id = self.kwargs.get('article_id', '---')
+        # if tags == '---' and article_id == '---':
+        #    return redirect(reverse_lazy('article', kwargs={'tags': 'python', 'article_id': 42}))
+        # return HttpResponse(f'Статья номер {article_id}. Тег {tags}')
 
 
 # def index(request, tags='python', article_id='42'):
