@@ -3,6 +3,9 @@ from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.views import View
+
+from hexlet_django_blog.article.models import Article
 
 
 # def index(request):  # (1)
@@ -15,6 +18,15 @@ from django.urls import reverse_lazy
 #            'author': 'Internet'
 #        }
 #    )
+
+
+class IndexView(View):
+
+    def get(self, request, *args, **kwargs):
+        articles = Article.objects.all()[:15]
+        return render(request, 'articles/index.html', context={
+            'articles': articles,
+        })
 
 
 class HomePageView(TemplateView):  # (2)
