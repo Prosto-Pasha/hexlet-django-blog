@@ -2,8 +2,15 @@
 
 {% block content %}
     <h1>Список статей</h1>
+    <form
+            action="{% url 'articles_create' %}"
+            method="post">{% csrf_token %}
+        <button
+                type="submit">Новая статья
+        </button>
+    </form>
+    <br>
     {% for article in articles %}
         <p><a href="{{ article.get_article_url }}">{{ article.name }}</a> {{ article.body|slice:":200" }}</p>
-        <br>
     {% endfor %}
 {% endblock %}
