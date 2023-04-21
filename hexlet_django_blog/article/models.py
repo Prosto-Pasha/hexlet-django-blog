@@ -10,3 +10,6 @@ class Article(models.Model):
 
     def get_article_url(self):
         return f'./{str(self.id)}/'
+
+    def get_article_update_url(self):
+        return f'./{str(self.id)}/edit/'

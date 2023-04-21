@@ -4,9 +4,14 @@ from django.views.generic.base import TemplateView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import View
+from django.contrib import messages
 
 from hexlet_django_blog.article.models import Article
 from hexlet_django_blog.article.forms import ArticleForm
+
+
+# def index(request, tags='python', article_id='42'):
+#    return redirect(f'/article/{tags}/{article_id}')
 
 
 # def index(request):  # (1)
@@ -24,7 +29,7 @@ from hexlet_django_blog.article.forms import ArticleForm
 class IndexView(View):
 
     def get(self, request, *args, **kwargs):
-        articles = Article.objects.all()[:15]
+        articles = Article.objects.all()  # [:15]
         return render(request, 'articles/index.html', context={
             'articles': articles,
         })
@@ -38,7 +43,15 @@ class ArticleFormCreateView(View):
 
     def post(self, request, *args, **kwargs):
         form = ArticleForm(request.POST)
+
+        # Если добавлять сообщение здесь, то оно дублируется при редирректе на 'article'
+
         if form.is_valid(): # Если данные корректные, то сохраняем данные формы
+
+            # Add message
+            # messages.add_message(request, messages.INFO, 'Статья успешно добавлена')
+            messages.info(request, 'Статья успешно добавлена')
+
             form.save()
             return redirect('articles') # Редирект на указанный маршрут
         # Если данные некорректные, то возвращаем человека обратно на страницу с заполненной формой
@@ -67,5 +80,20 @@ class HomePageView(TemplateView):  # (2)
         # return HttpResponse(f'Статья номер {article_id}. Тег {tags}')
 
 
-# def index(request, tags='python', article_id='42'):
-#    return redirect(f'/article/{tags}/{article_id}')
+class ArticleFormEditView(View):
+
+    def get(self, request, *args, **kwargs):
+        article_id = kwargs.get('id')
+        article = Article.objects.get(id=article_id)
+        form = ArticleForm(instance=article)
+        return render(request, 'articles/update.html', {'form': form, 'article_id':article_id})
+
+    def post(self, request, *args, **kwargs):
+        article_id = kwargs.get('id')
+        article = Article.objects.get(id=article_id)
+        form = ArticleForm(request.POST, instance=article)
+        if form.is_valid():
+            form.save()
+            messages.info(request, 'Статья успешно обновлена')
+            return redirect('articles')
+        return render(request, 'articles/update.html', {'form': form, 'article_id': article_id})
