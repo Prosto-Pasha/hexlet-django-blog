@@ -13,3 +13,6 @@ class Article(models.Model):
 
     def get_article_update_url(self):
         return f'./{str(self.id)}/edit/'
+
+    def get_article_destroy_url(self):
+        return f'./{str(self.id)}/delete/'
