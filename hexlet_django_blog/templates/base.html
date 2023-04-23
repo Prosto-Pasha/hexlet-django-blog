@@ -18,20 +18,69 @@
               crossorigin="anonymous"></script>
       <title>{% block title %}Django на Хекслете{% endblock %}</title>
     </head>
-    <div class="container p-0">
-        <body>
-            {% include 'includes/messages.html' %}
-            <div id="sidebar">
-                {% block sidebar %}
-                    <ul>
-                        <li><a href="/">Главная</a></li>
-                        <li><a href="/article/">Статьи</a></li>
-                    </ul>
-                {% endblock %}
+    <body>
+        {% include 'includes/messages.html' %}
+        <div class="container-fluid">
+            <div class="row flex-nowrap">
+                <div class="col-auto px-0" width="360">
+                    <div id="sidebar" class="collapse collapse-horizontal show border-end">
+                        <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start min-vh-100">
+                            {% block sidebar %}
+                            <a href="/"
+                               class="list-group-item border-end-0 d-inline-block text-truncate"
+                               data-bs-parent="#sidebar">
+                                <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="currentColor"
+                                        class="bi bi-house-fill"
+                                        viewBox="0 0 16 16">
+                                    <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"/>
+                                    <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
+                                </svg>
+                                <span>Главная</span>
+                            </a>
+                            <a href="/article/"
+                               class="list-group-item border-end-0 d-inline-block text-truncate"
+                               data-bs-parent="#sidebar">
+                                <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="currentColor"
+                                        class="bi bi-card-list"
+                                        viewBox="0 0 16 16">
+                                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                    <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
+                                </svg>
+                                <span>Статьи</span>
+                            </a>
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+                <main class="col ps-md-2 pt-2">
+                    <a href="#"
+                       data-bs-target="#sidebar"
+                       data-bs-toggle="collapse"
+                       class="border rounded-3 p-1 text-decoration-none"
+                    >
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="16"
+                         height="16"
+                         fill="currentColor"
+                         class="bi bi-list"
+                         viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                    </svg> Menu</a>
+                    <div class="d-flex flex-column flex-shrink-0">
+                        <div id="content">
+                            {% block content %}{% endblock %}
+                        </div>
+                    </div>
+                </main>
             </div>
-            <div id="content">
-                {% block content %}{% endblock %}
-            </div>
-        </body>
-    </div>
+        </div>
+    </body>
 </html>
